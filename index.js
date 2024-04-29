@@ -51,6 +51,35 @@ app.get('/art/:id', async(req, res) => {
 })
 
 
+app.put('/art/:id' , async(req, res) => {
+  const id = req.params.id;
+  const filter = {_id: new ObjectId(id)}
+  const options = {upsert : true};
+  const updatedArt = req.body;
+  const Art = {
+      $set: {
+        
+         item_name: updatedArt.item_name ,
+         subcategory_Name: updatedArt.subcategory_Name , short_description: updatedArt.short_description , 
+         price: updatedArt.price ,
+          rating: updatedArt.rating , 
+          processing_time: updatedArt.processing_time ,
+           photo: updatedArt.photo , 
+           customization: updatedArt.customization,
+            stock_status: updatedArt.stock_status
+      }
+  }
+  const result = await artCollection.updateOne(filter, Art, options);
+  res.send(result);
+})
+
+
+
+
+
+
+
+
 
 
 app.post('/art' , async(req, res)=>{
